@@ -173,10 +173,10 @@ export default function Dashboard() {
               <p className="text-xs text-gray-600 mb-4">
                 {activeProvider === "All" ? "All cloud providers" : `Filtered: ${activeProvider} only`}
               </p>
-              <ResponsiveContainer width="100%" height={240}>
-                <LineChart data={dailyChartData} margin={{ left: 10 }}>
+              <ResponsiveContainer width="100%" height={270}>
+                <LineChart data={dailyChartData} margin={{ left: 10, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis dataKey="date" tick={{ fill: "#9CA3AF", fontSize: 10 }} label={{ value: "Date (MM-DD)", position: "insideBottom", fill: "#6B7280", fontSize: 10, dy: 10 }} height={40} />
+                  <XAxis dataKey="date" tick={{ fill: "#9CA3AF", fontSize: 10 }} label={{ value: "Date (MM-DD)", position: "insideBottomRight", offset: 0, fill: "#6B7280", fontSize: 10 }} height={44} />
                   <YAxis tick={<DollarTick />} label={{ value: "USD ($)", angle: -90, position: "insideLeft", fill: "#6B7280", fontSize: 10, dx: -10 }} />
                   <Tooltip content={<ChartTooltip />} />
                   <Line type="monotone" dataKey="Cost (USD)" stroke="#8B5CF6" strokeWidth={2} dot={{ r: 3, fill: "#8B5CF6" }} name="Daily Cost" />
