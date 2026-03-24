@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: cloudsentinel-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    plan: free
+    envVars:
+      - key: DB_URL
+        value: postgresql://neondb_owner:npg_HZt9NPAcJKv3@ep-calm-hall-a1npjp3x-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - key: DB_USERNAME
+        value: neondb_owner
+      - key: DB_PASSWORD
+        value: npg_HZt9NPAcJKv3
+      - key: JWT_SECRET
+        value: CloudSentinelJWTSecretKey2026ForRender
