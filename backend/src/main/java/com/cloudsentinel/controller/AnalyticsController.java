@@ -13,7 +13,8 @@ public class AnalyticsController {
 
     @GetMapping
     public ResponseEntity<AnalyticsResponse> getAnalytics(
-            @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(analyticsService.getAnalytics(userDetails.getUsername()));
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestParam(defaultValue = "All") String provider) {
+        return ResponseEntity.ok(analyticsService.getAnalytics(userDetails.getUsername(), provider));
     }
 }
