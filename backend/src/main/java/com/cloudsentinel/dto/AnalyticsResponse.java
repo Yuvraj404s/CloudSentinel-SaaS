@@ -10,4 +10,6 @@ public class AnalyticsResponse {
     private List<Map<String, Object>> dailyTrend;
     private BigDecimal projectedMonthlyTotal;
     private BigDecimal currentMonthTotal;
+    private List<Map<String, Object>> providerBreakdown;
+    private List<Map<String, Object>> topRegions;
 }
