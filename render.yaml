@@ -6,7 +6,7 @@ services:
     plan: free
     envVars:
       - key: DB_URL
-        value: postgresql://neondb_owner:npg_HZt9NPAcJKv3@ep-calm-hall-a1npjp3x-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+        value: jdbc:postgresql://ep-calm-hall-a1npjp3x-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&user=neondb_owner&password=npg_HZt9NPAcJKv3
       - key: DB_USERNAME
         value: neondb_owner
       - key: DB_PASSWORD
