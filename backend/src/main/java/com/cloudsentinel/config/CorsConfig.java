@@ -16,7 +16,8 @@ public class CorsConfig {
             "http://localhost:80",
             "http://localhost",
             "https://*.vercel.app",
-            "https://cloudsentinel-saas.vercel.app"
+            "https://cloud-sentinel-saa-s.vercel.app",
+            "https://cloud-sentinel-saa-opsoiqayl-yuvraj404s-projects.vercel.app"
         ));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
