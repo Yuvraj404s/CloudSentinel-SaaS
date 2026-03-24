@@ -6,7 +6,6 @@ import com.cloudsentinel.repository.*;
 import com.cloudsentinel.security.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.*;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
@@ -21,14 +20,18 @@ public class AuthService {
     private final JwtUtils jwtUtils;
 
     public AuthResponse register(RegisterRequest req) {
+        if (req.getUsername() == null || req.getUsername().trim().length() < 3)
+            throw new RuntimeException("Username must be at least 3 characters");
+        if (req.getPassword() == null || req.getPassword().length() < 6)
+            throw new RuntimeException("Password must be at least 6 characters");
         if (userRepository.existsByUsername(req.getUsername()))
-            throw new RuntimeException("Username already taken");
+            throw new RuntimeException("Username already taken. Please choose another.");
         if (userRepository.existsByEmail(req.getEmail()))
-            throw new RuntimeException("Email already registered");
+            throw new RuntimeException("Email already registered. Try logging in.");
 
         User user = User.builder()
-            .username(req.getUsername())
-            .email(req.getEmail())
+            .username(req.getUsername().trim())
+            .email(req.getEmail().trim())
             .password(passwordEncoder.encode(req.getPassword()))
             .roles(Set.of("USER"))
             .build();
@@ -39,13 +42,21 @@ public class AuthService {
         alertConfigRepository.save(config);
 
         String token = jwtUtils.generateToken(user.getUsername());
-        return new AuthResponse(token, user.getUsername(), "Registration successful");
+        return new AuthResponse(token, user.getUsername(), "Registration successful! Welcome to CloudSentinel.");
     }
 
     public AuthResponse login(LoginRequest req) {
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword()));
+        try {
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword()));
+        } catch (BadCredentialsException e) {
+            throw new RuntimeException("Invalid username or password. Please try again.");
+        } catch (DisabledException e) {
+            throw new RuntimeException("Your account is disabled. Contact support.");
+        } catch (LockedException e) {
+            throw new RuntimeException("Your account is locked. Contact support.");
+        }
         String token = jwtUtils.generateToken(req.getUsername());
-        return new AuthResponse(token, req.getUsername(), "Login successful");
+        return new AuthResponse(token, req.getUsername(), "Welcome back!");
     }
 }
